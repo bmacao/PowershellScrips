@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dbs>
+ <db module="Auditpool" >
+ <type>Auditpool</type>
+ <commands>AUDITPOL /GET;AUDITPOL /SET </commands>
+ <examples>AUDITPOL /GET /category:*;AUDITPOL /GET /category:"System";AUDITPOL /GET /SUBCATEGORY:"Policy Change /Audit Polocy change";AUDITPOL /SET /CATEGORY:"System" /SUCCESS:ENABLE;AUDITPOL /SET /CATEGORY:"file system" /FAILURE:ENABLE;AUDITPOL /SET /SUBCATEGORY:"Removable Storage" /Failure:ENABLE;AUDITPOL /SET /SUBCATEGORY:"Other System Events" /SUCCESS:ENABLE;AUDITPOL /SET /SUBCATEGORY:"User / Device Claims" /Failure:ENABLE /SUCCESS:ENABLE </examples>
+ </db>
+ <db module="OS" >
+ <type>OS - Powershell</type>
+ <commands>Multiple </commands>
+ <examples>System Uptime:;Get-CimInstance -ClassName win32_operatingsystem | select csname, lastbootuptime;AD search user with pw never expire:;Search-ADAccount -PasswordNeverExpires | FT Name -A</examples>
+ </db>
+ <db module="OS" >
+ <type>OS - CMD</type>
+ <commands>Multiple </commands>
+ <examples>Search PDC:;nltest /dclist:[domain];Get AD user Groups:;Get-ADPrincipalGroupMembership username | select name</examples>
+ </db>
+ <db module="OS" >
+ <type>OS - RUN</type>
+ <commands>Multiple </commands>
+ <examples>Open Computer Management:;compmgmt.msc;Open Server Management:;servermanager.msc</examples>
+ </db>
+ <db module="Websphere" >
+ <type>Websphere - JACL</type>
+ <commands>Limiting the growth of JVM log files (run each line with according values)</commands>
+ <examples>set s1 [$AdminConfig getid /Cell:mycell/Node:mynode/Server:server1/];set log [$AdminConfig showAttribute $s1 errorStreamRedirect] OR set log [$AdminConfig showAttribute $s1 errorStreamRedirect];$AdminConfig show $log;(rollover 2MB) $AdminConfig modify $log {{rolloverSize 2}};(rollover 90 days) $AdminConfig modify $log {{rolloverType TIME} {rolloverPeriod 2160} {baseHour 24}};AdminConfig.save();-> URL:https://www.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/txml_logrotation.html</examples>
+ </db>
+ <db module="Websphere" >
+ <type>Websphere - JYTHON</type>
+ <commands>Limiting the growth of JVM log files</commands>
+ <examples>s1 = AdminConfig.getid('/Cell:mycell/Node:mynode/Server:server1/');log = AdminConfig.showAttribute(s1, 'errorStreamRedirect') OR log = AdminConfig.showAttribute(s1, 'errorStreamRedirect');AdminConfig.show(log);(rollover 2MB) AdminConfig.modify(log, [['rolloverSize', 2]])};(rollover 90 days) $AdminConfig.modify(,log [['rolloverType','TIME'],['rolloverPeriod', 2160] ['baseHour',24}};AdminConfig.save();-> URL:https://www.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/txml_logrotation.html</examples>
+ </db>
+</dbs>
